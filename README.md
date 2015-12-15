@@ -42,7 +42,7 @@ This first rule sends the commands to the API in response to changes in a virtua
     if (Heatpump1.state == ON && Heatpump1Stable)
     {   Heatpump1Stable = false
 	    logInfo("Heatpumps", "Heatpump1 on Switch Rule Ran")
-	    executeCommandLine('curl@@-H@@Content-Type: application/x-www-form-urlencoded@@-X@@POST@@-d@@{"acState":    {"on":true,"mode":"cool","fanLevel":"auto","targetTemperature":19}}@@https://home.sensibo.com/api/v2/pods/MYPODID/acStates?apiKey=MYAPIKEY&fields=acState', 5000)
+	    executeCommandLine('curl@@-H@@Content-Type: application/x-www-form-urlencoded@@-X@@POST@@-d@@{"acState":{"on":true,"mode":"cool","fanLevel":"auto","targetTemperature":19}}@@https://home.sensibo.com/api/v2/pods/MYPODID/acStates?apiKey=MYAPIKEY&fields=acState', 5000)
     	PauseHeatpump1Updates = createTimer(now.plusSeconds(15))[|
     	Heatpump1Stable = true
     	]}
