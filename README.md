@@ -1,6 +1,6 @@
 Welcome to the Sensibo-and-Openhab-V1.8 wiki!
 
-These instructions are working on Nightly Openhab 1.8 from late November and Wheezy Raspbian, please let me know if they work on other versions, or if you have a more elegant way of doing this.
+These instructions are working on Openhab 1.8, please let me know if they work on other versions, or if you have a more elegant way of doing this.
 
 To get Openhab V1.8 to control Sensibo via the Sensibo API carry out the following steps.
 
