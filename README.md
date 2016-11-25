@@ -64,18 +64,14 @@ This second rule queries the API for AC Status and Temperature Measurements and 
     if (Heatpump1Stable)
     try {
     var Heatpump1Status = executeCommandLine('curl -sSH "Accept: application/json"     "https://home.sensibo.com/api/v2/pods/MYPODID/acStates?apiKey=MYAPIKEY&limit=1&fields=acState"', 5000)
-    	var String Heatpump1On = (transform("JSONPATH", "$.result..on", Heatpump1Status))
-    	if (Heatpump1On == "[true]" && Heatpump1Stable)
+    	var String Heatpump1On = (transform("JSONPATH", "$.result..on[0]", Heatpump1Status))
+    	if (Heatpump1On == "true" && Heatpump1Stable)
     {	postUpdate(Heatpump1, ON)	}	
-    	if (Heatpump1On == "[false]" && Heatpump1Stable)
+    	if (Heatpump1On == "false" && Heatpump1Stable)
     {	postUpdate(Heatpump1, OFF)	}	
     	var Heatpump1Measurements = executeCommandLine('curl -sSH "Accept: application/json"     "https://home.sensibo.com/api/v2/pods/MYPODID/measurements?apiKey=<MYAPIKEY>&fields=batteryVoltage,temperature,humidity"', 5000)
-    	var String Heatpump1TemperatureTransform = (transform("JSONPATH", "$.result..temperature", Heatpump1Measurements))
-    	var String Heatpump1TransformString = (Heatpump1TemperatureTransform.replace('[', '').replace(']', ''))
-    	val Number Heatpump1TemperatureValue = new Double(Heatpump1TransformString)
-    	var String Heatpump1BatteryTransform = (transform("JSONPATH", "$.result..batteryVoltage", Heatpump1Measurements))
-    	var String Heatpump1BatteryTransformString = (Heatpump1BatteryTransform.replace('[', '').replace(']', ''))
-    	val Number Heatpump1Battery = new Double(Heatpump1BatteryTransformString)
+    	val Number Heatpump1TemperatureValue = new Double(transform("JSONPATH", "$.result..temperature[0]", Heatpump1Measurements))
+    	val Number Heatpump1Battery = new Double(transform("JSONPATH", "$.result..batteryVoltage[0]", Heatpump1Measurements))
     //	logInfo("Testing", "Heatpump1 Battery Voltage is " +Heatpump1Battery)
     	postUpdate(Heatpump1SensiboTemperature, Heatpump1TemperatureValue)
     if	(Heatpump1Battery < ReplaceBatteryLevel && BatteryEmailNotSent)
